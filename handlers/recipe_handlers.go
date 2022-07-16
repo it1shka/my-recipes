@@ -7,5 +7,5 @@ import (
 )
 
 func getRecipeAddHandler(ctx *gin.Context) {
-	ctx.String(http.StatusOK, "You are allowed to visit the page!")
+	ctx.HTML(http.StatusOK, "recipe_form.html", gin.H{})
 }

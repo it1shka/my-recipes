@@ -34,7 +34,7 @@ func authRequiredMiddleware() gin.HandlerFunc {
 		if userid == nil {
 			session.Set("error", "Authentication required")
 			session.Save()
-			ctx.Redirect(http.StatusMovedPermanently, "/login")
+			ctx.Redirect(http.StatusFound, "/login")
 			return
 		}
 		ctx.Next()

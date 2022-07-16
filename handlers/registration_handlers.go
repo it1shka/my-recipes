@@ -36,7 +36,7 @@ func postLoginHandler(ctx *gin.Context) {
 	loginError := func(message string) {
 		errmsg := fmt.Sprintf("Failed to login: %s", message)
 		session.Set("error", errmsg)
-		ctx.Redirect(http.StatusMovedPermanently, "/login")
+		ctx.Redirect(http.StatusFound, "/login")
 	}
 
 	var loginData LoginFormData
@@ -62,7 +62,7 @@ func postLoginHandler(ctx *gin.Context) {
 	session.Set("username", user.Name)
 	session.Set("useremail", user.Email)
 
-	ctx.Redirect(http.StatusMovedPermanently, "/")
+	ctx.Redirect(http.StatusFound, "/")
 }
 
 type RegisterFormData struct {
@@ -79,7 +79,7 @@ func postRegisterHandler(ctx *gin.Context) {
 	regError := func(message string) {
 		errmsg := fmt.Sprintf("Failed to register: %s", message)
 		session.Set("error", errmsg)
-		ctx.Redirect(http.StatusMovedPermanently, "/register")
+		ctx.Redirect(http.StatusFound, "/register")
 	}
 
 	var regData RegisterFormData
@@ -116,7 +116,7 @@ func postRegisterHandler(ctx *gin.Context) {
 	session.Set("username", user.Name)
 	session.Set("useremail", user.Email)
 
-	ctx.Redirect(http.StatusMovedPermanently, "/")
+	ctx.Redirect(http.StatusFound, "/")
 }
 
 func getLogoutHander(ctx *gin.Context) {
@@ -127,5 +127,5 @@ func getLogoutHander(ctx *gin.Context) {
 	session.Delete("username")
 	session.Delete("useremail")
 
-	ctx.Redirect(http.StatusMovedPermanently, "/")
+	ctx.Redirect(http.StatusFound, "/")
 }
