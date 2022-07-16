@@ -14,6 +14,6 @@ func Connect() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&User{}, &Recipe{})
 	DB = db
 }

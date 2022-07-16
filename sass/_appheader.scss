@@ -30,11 +30,16 @@
 }
 
 .appheader__reginfo {
+  font-size: 0.8em;
   display: flex;
   flex-direction: row;
   align-items: center;
   & > * + * {
     margin-left: 1.5em;
+  }
+
+  @media (min-width: 50em) {
+    font-size: 1em;
   }
 }
 

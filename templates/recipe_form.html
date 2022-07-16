@@ -2,6 +2,26 @@
 
 {{ template "back-home" }}
 
+<form class="recipe-form" method="post">
+  <input style="font-size: 1.35em;" required
+    placeholder="Your recipe title..."
+  >
 
+  <!-- <p>Ingredients: </p>
+  <ul class="ingredients">
+    <input
+      class="autoresize-input" 
+      placeholder="New: "
+
+    >
+    <li>Milk</li>
+  </ul> -->
+
+  <textarea required
+    class="autoresize-textarea"
+    placeholder="Description: "
+  ></textarea>
+  <button class="color-button" type="submit">Post!</button>
+</form>
 
 {{ template "footer" }}
