@@ -1,0 +1,55 @@
+.regform {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  --main-dark-shadow: var(--main-dark) 0px 0px 1px;
+}
+
+.regform__homelink {
+  position: fixed;
+  top: 10px;
+  left: 15px;
+
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+
+.regform__form {
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  max-width: 420px;
+  width: 100%;
+  min-height: 360px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  & > * + * {
+    margin-top: 0.75em;
+  }
+
+  padding: 1em 2em;
+}
+
+.regform__form h1 {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.regform__form input {
+  font-size: inherit;
+  padding: 0.2em 0.5em;
+  outline: none;
+
+  border: 1px solid grey;
+  box-shadow: white 0px 0px 1px;
+
+  transition: all 0.2s;
+  transition-property: border, box-shadow, color;
+
+  &:focus {
+    border: 1px solid var(--main-dark);
+    box-shadow: var(--main-dark-shadow);
+    color: var(--main-dark);
+  }
+}

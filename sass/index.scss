@@ -1,0 +1,75 @@
+@use 'appheader';
+@use 'regform';
+
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+:root {
+  --box-shadow: 0px 0px 4px #ccc;
+  --main-dark: #0000ad;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: calc(0.75em + 0.5vw);
+  @media (min-width: 35em) {
+    font-size: 1em;
+  }
+  color: #383838;
+  background-color: #f2f2f2;
+}
+
+.fancy-link {
+  --borderwidth: 3px;
+
+  text-decoration: none;
+  font-size: 1.25em;
+  color: inherit;
+  font-weight: 200;
+
+  transition: all 0.1s ease-in;
+
+  transition-property: color, padding-bottom, border-bottom;
+  padding-bottom: 0px;
+  border-bottom: 0px solid white;
+
+  &:hover {
+    padding-bottom: var(--borderwidth);
+    border-bottom: var(--borderwidth) solid var(--main-dark);
+    color: var(--main-dark);
+  }
+}
+
+.color-button {
+  font-size: 0.9em;
+  text-decoration: none;
+
+  font-weight: bold;
+  color: inherit;
+  padding: 0.4em 0.75em;
+  min-width: 50px;
+  border: none;
+  background-color: #e4e4e4;
+  border-radius: 7px;
+  box-shadow: white 0px 0px 1px;
+
+  transition: all 0.1s;
+  transition-property: background-color, color, box-shadow;
+
+  &:hover {
+    background-color: var(--main-dark);
+    color: white;
+    box-shadow: var(--main-dark-shadow);
+  }
+}
+
+.error-widget {
+  padding: 0.5em 1em;
+  background-color: #ffd2d2;
+  border-radius: 7px;
+}

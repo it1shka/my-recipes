@@ -1,0 +1,24 @@
+{{ template "header"  }}
+
+<header class="appheader">
+  <div class="appheader__logo">
+    <img src="/assets/recipe.png">
+    <h1>My Recipes</h1>
+  </div>
+  {{ if not .username }}
+  <div class="appheader__reglinks">
+    <a class="fancy-link" href="/login">Login</a>
+    <a class="fancy-link" href="/register">Register</a>
+  </div>
+  {{ else }}
+    <div class="appheader__reginfo">
+      <div>
+        <h3>{{ .username }}</h3>
+        <small> {{ .useremail }}</small>
+      </div>
+      <a class="color-button" href="/logout">Log Out</a>
+    </div>
+  {{ end }}
+</header>
+
+{{ template "footer" }}

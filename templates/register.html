@@ -1,0 +1,36 @@
+{{ template "header" }}
+
+<div class="regform">
+  <a class="regform__homelink fancy-link" href="/">Back home</a>
+
+  <form class="regform__form" method="post" action="/register">
+    <h1>Register</h1>
+    <input required 
+      name="name"
+      type="text" 
+      placeholder="Your name: "
+    />
+    <input required 
+      name="email"
+      type="email" 
+      placeholder="Your email: "
+    />
+    <input required
+      name="password"
+      type="password"
+      placeholder="Your password: "
+    />
+    <input required
+      name="confirm_password"
+      type="password"
+      placeholder="Confirm password: "
+    />
+    <div>
+      <button class="color-button" type="submit">Create account</button>
+      <a class="color-button" href="/login">To login</a>
+    </div>
+    {{ template "error" . }}
+  </form>
+</div>
+
+{{ template "footer" }}
