@@ -19,7 +19,7 @@ func Setup(server *gin.Engine) {
 	recipeRouter := server.Group("/recipe")
 	{
 		protected := recipeRouter.Group("/", authRequiredMiddleware())
-		protected.GET("/add", getRecipeAddHandler)
+		protected.GET("/add", errorMessageMiddleware(), getRecipeAddHandler)
 		protected.POST("/add", postRecipeAddHandler)
 	}
 }

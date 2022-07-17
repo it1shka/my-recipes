@@ -4,6 +4,7 @@
 
 <form class="recipe-form" method="post">
   <input style="font-size: 1.35em;" required
+    name="title"
     placeholder="Your recipe title..."
   >
 
@@ -18,10 +19,12 @@
   </ul> -->
 
   <textarea required
+    name="description"
     class="autoresize-textarea"
     placeholder="Description: "
   ></textarea>
   <button class="color-button" type="submit">Post!</button>
+  {{ template "error" . }}
 </form>
 
 {{ template "footer" }}
