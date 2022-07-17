@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/gin-contrib/sessions v0.0.5
 	github.com/gin-gonic/gin v1.8.1
+	github.com/gomarkdown/markdown v0.0.0-20220627144906-e9a81102ebeb
 	github.com/gosimple/slug v1.12.0
 	github.com/joho/godotenv v1.4.0
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
@@ -18,7 +19,6 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
 	github.com/goccy/go-json v0.9.8 // indirect
-	github.com/gomarkdown/markdown v0.0.0-20220627144906-e9a81102ebeb // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.2.1 // indirect

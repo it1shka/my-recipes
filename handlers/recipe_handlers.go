@@ -69,3 +69,9 @@ func postRecipeAddHandler(ctx *gin.Context) {
 	redirectRoute := fmt.Sprintf("/recipe/%s", slug)
 	ctx.Redirect(http.StatusFound, redirectRoute)
 }
+
+func getRecipeBySlugHandler(ctx *gin.Context) {
+	slug := ctx.Param("slug")
+	// ...
+	ctx.String(http.StatusOK, slug)
+}

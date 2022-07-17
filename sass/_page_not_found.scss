@@ -1,0 +1,21 @@
+.page-not-found {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.page-not-found__content {
+  box-shadow: var(--box-shadow);
+  padding: 2em 3em;
+  background-color: white;
+  max-width: 460px;
+}
+
+.page-not-found__content > * + * {
+  margin-top: 1em;
+}
+
+.page-not-found__content p {
+  padding: 0.5em 1em;
+  background-color: #f3f3f3;
+}

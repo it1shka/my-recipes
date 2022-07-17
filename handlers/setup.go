@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,5 +23,11 @@ func Setup(server *gin.Engine) {
 		protected := recipeRouter.Group("/", authRequiredMiddleware())
 		protected.GET("/add", errorMessageMiddleware(), getRecipeAddHandler)
 		protected.POST("/add", postRecipeAddHandler)
+
+		recipeRouter.GET("/:slug", getRecipeBySlugHandler)
 	}
+
+	server.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, "404.html", nil)
+	})
 }

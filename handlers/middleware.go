@@ -35,8 +35,10 @@ func authRequiredMiddleware() gin.HandlerFunc {
 			session.Set("error", "Authentication required")
 			session.Save()
 			ctx.Redirect(http.StatusFound, "/login")
+			ctx.Abort()
 			return
 		}
+
 		ctx.Next()
 	}
 }
