@@ -10,6 +10,7 @@ import (
 	"github.com/gomarkdown/markdown"
 	"github.com/gosimple/slug"
 	"it1shka.com/my-recipes/database"
+	"it1shka.com/my-recipes/myutils"
 )
 
 const RECIPE_SHORT_MESSAGE = `
@@ -74,17 +75,12 @@ func postRecipeAddHandler(ctx *gin.Context) {
 
 func getRecipeBySlugHandler(ctx *gin.Context) {
 
-	slug := ctx.Param("slug")
-	recipe, exists := database.FindRecipeBySlug(slug)
-	if !exists {
-		ctx.HTML(http.StatusNotFound, "404.html", nil)
-		return
-	}
+	recipe := myutils.ExcludeRecipe(ctx)
 
 	authorName := database.AuthorNameById(recipe.AuthorID)
 	createdAt := recipe.CreatedAt.Format("2006-02-01")
 	description := string(markdown.ToHTML([]byte(recipe.Description), nil, nil))
-	currentUserId := sessions.Default(ctx).Get("userid").(uint)
+	currentUserId := sessions.Default(ctx).Get("userid")
 
 	ctx.HTML(http.StatusOK, "recipe_page.html", gin.H{
 		"title":       recipe.Title,
@@ -94,4 +90,10 @@ func getRecipeBySlugHandler(ctx *gin.Context) {
 
 		"isAuthor": currentUserId == recipe.AuthorID,
 	})
+}
+
+func getRecipeDeleteHandler(ctx *gin.Context) {
+	recipe := myutils.ExcludeRecipe(ctx)
+	database.DB.Delete(&recipe)
+	ctx.Redirect(http.StatusFound, "/")
 }

@@ -21,10 +21,14 @@ func Setup(server *gin.Engine) {
 	recipeRouter := server.Group("/recipe")
 	{
 		protected := recipeRouter.Group("/", authRequiredMiddleware())
+		// protected routes
 		protected.GET("/add", errorMessageMiddleware(), getRecipeAddHandler)
 		protected.POST("/add", postRecipeAddHandler)
 
-		recipeRouter.GET("/:slug", getRecipeBySlugHandler)
+		protected.GET("/:slug/delete", ensureRecipeExistanceMiddleware(), ensureAuthorMiddleware(), getRecipeDeleteHandler)
+
+		// public routes
+		recipeRouter.GET("/:slug", ensureRecipeExistanceMiddleware(), getRecipeBySlugHandler)
 	}
 
 	server.NoRoute(func(ctx *gin.Context) {
