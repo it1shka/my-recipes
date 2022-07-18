@@ -1,3 +1,9 @@
+@mixin recipe-box {
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: var(--box-shadow);
+}
+
 .recipe-page {
   max-width: 720px;
   margin: 2em auto;
@@ -7,11 +13,10 @@
 }
 
 .recipe-page__header {
+  @include recipe-box;
   padding: 0.5em 1em;
   // background-color: #e8ffe3;
   background-color: #ebfeff;
-  border-radius: 7px;
-  box-shadow: var(--box-shadow);
   font-family: 'Permanent Marker', cursive;
 
   p {
@@ -20,14 +25,13 @@
 }
 
 .recipe-page__content {
-  background-color: white;
-  border-radius: 7px;
-  box-shadow: var(--box-shadow);
+  @include recipe-box;
   padding: 1em 2em;
   & > * + * {
     margin-top: 1em;
   }
 }
+
 
 .recipe-page__content {
   img {

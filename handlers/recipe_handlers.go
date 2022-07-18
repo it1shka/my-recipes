@@ -84,6 +84,7 @@ func getRecipeBySlugHandler(ctx *gin.Context) {
 
 	ctx.HTML(http.StatusOK, "recipe_page.html", gin.H{
 		"title":       recipe.Title,
+		"slug":        recipe.Slug,
 		"authorname":  authorName,
 		"createdat":   createdAt,
 		"description": template.HTML(description),

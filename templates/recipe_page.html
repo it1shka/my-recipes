@@ -7,6 +7,12 @@
   <div class="recipe-page__header">
     <h1>{{ .title }}</h1>
     <p>By {{ .authorname }}, {{ .createdat }}</p>
+    {{ if .isAuthor }}
+    <div style="margin: 0.5em 0em;">
+      <a class="color-button" href="/recipe/{{ .slug }}/delete">Delete</a>
+      <a class="color-button" href="/recipe/{{ .slug }}/edit">Edit</a>
+    </div>
+    {{ end }}
   </div>
 
   <div class="recipe-page__content">

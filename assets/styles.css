@@ -178,10 +178,11 @@
 }
 
 .recipe-page__header {
-  padding: 0.5em 1em;
-  background-color: #ebfeff;
+  background-color: white;
   border-radius: 7px;
   box-shadow: var(--box-shadow);
+  padding: 0.5em 1em;
+  background-color: #ebfeff;
   font-family: "Permanent Marker", cursive;
 }
 .recipe-page__header p {
