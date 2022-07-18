@@ -98,3 +98,51 @@ func getRecipeDeleteHandler(ctx *gin.Context) {
 	database.DB.Delete(&recipe)
 	ctx.Redirect(http.StatusFound, "/")
 }
+
+func getRecipeEditHandler(ctx *gin.Context) {
+	errmsg := ctx.GetString("error")
+	recipe := myutils.ExcludeRecipe(ctx)
+	ctx.HTML(http.StatusOK, "recipe_form.html", gin.H{
+		"title":       recipe.Title,
+		"description": recipe.Description,
+		"error":       errmsg,
+	})
+}
+
+func postRecipeEditHandler(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	defer session.Save()
+
+	recipe := myutils.ExcludeRecipe(ctx)
+
+	recipeError := func(message string) {
+		errmsg := fmt.Sprintf("Failed to edit \"%s\" recipe: %s", recipe.Title, message)
+		session.Set("error", errmsg)
+		redirect := fmt.Sprintf("/recipe/%s/edit", recipe.Slug)
+		ctx.Redirect(http.StatusFound, redirect)
+	}
+
+	var editedRecipeData RecipeFormData
+	if err := ctx.ShouldBind(&editedRecipeData); err != nil {
+		recipeError("form validation failed")
+		return
+	}
+
+	if len(editedRecipeData.Title) < 5 || len(editedRecipeData.Description) < 250 {
+		recipeError(RECIPE_SHORT_MESSAGE)
+		return
+	}
+
+	updates := map[string]interface{}{
+		"title":       editedRecipeData.Title,
+		"description": editedRecipeData.Description,
+		"slug":        slug.Make(editedRecipeData.Title),
+	}
+	if err := database.DB.Model(&recipe).Updates(updates).Error; err != nil {
+		recipeError("failed to update your recipe")
+		return
+	}
+
+	redirectRoute := fmt.Sprintf("/recipe/%s", updates["slug"])
+	ctx.Redirect(http.StatusFound, redirectRoute)
+}

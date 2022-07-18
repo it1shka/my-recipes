@@ -20,12 +20,16 @@ func Setup(server *gin.Engine) {
 
 	recipeRouter := server.Group("/recipe")
 	{
-		protected := recipeRouter.Group("/", authRequiredMiddleware())
 		// protected routes
+		protected := recipeRouter.Group("/", authRequiredMiddleware())
 		protected.GET("/add", errorMessageMiddleware(), getRecipeAddHandler)
 		protected.POST("/add", postRecipeAddHandler)
 
-		protected.GET("/:slug/delete", ensureRecipeExistanceMiddleware(), ensureAuthorMiddleware(), getRecipeDeleteHandler)
+		// protected delete and edit
+		managing := protected.Group("/:slug", ensureRecipeExistanceMiddleware(), ensureAuthorMiddleware())
+		managing.GET("/delete", getRecipeDeleteHandler)
+		managing.GET("/edit", errorMessageMiddleware(), getRecipeEditHandler)
+		managing.POST("/edit", postRecipeEditHandler)
 
 		// public routes
 		recipeRouter.GET("/:slug", ensureRecipeExistanceMiddleware(), getRecipeBySlugHandler)
