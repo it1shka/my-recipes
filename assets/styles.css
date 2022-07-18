@@ -169,6 +169,56 @@
   background-color: #f3f3f3;
 }
 
+.recipe-page {
+  max-width: 720px;
+  margin: 2em auto;
+}
+.recipe-page > * + * {
+  margin-top: 0.8em;
+}
+
+.recipe-page__header {
+  padding: 0.5em 1em;
+  background-color: #ebfeff;
+  border-radius: 7px;
+  box-shadow: var(--box-shadow);
+  font-family: "Permanent Marker", cursive;
+}
+.recipe-page__header p {
+  color: grey;
+}
+
+.recipe-page__content {
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: var(--box-shadow);
+  padding: 1em 2em;
+}
+.recipe-page__content > * + * {
+  margin-top: 1em;
+}
+
+.recipe-page__content img {
+  max-width: 300px;
+  height: auto;
+  border-radius: 7px;
+  transition: 0.2s transform ease-in;
+}
+.recipe-page__content img:hover {
+  transform: scale(1.05);
+}
+.recipe-page__content h1, .recipe-page__content h2, .recipe-page__content h3, .recipe-page__content h4, .recipe-page__content h5, .recipe-page__content h6 {
+  font-family: "Permanent Marker", cursive;
+  padding-left: 0px;
+  border-left: 0px solid #ebfeff;
+  transition: 0.2s all ease;
+  transition-property: padding-left, border-left;
+}
+.recipe-page__content h1:hover, .recipe-page__content h2:hover, .recipe-page__content h3:hover, .recipe-page__content h4:hover, .recipe-page__content h5:hover, .recipe-page__content h6:hover {
+  padding-left: 6px;
+  border-left: 4px solid #5dcbd1;
+}
+
 :root {
   --box-shadow: 0px 0px 4px #ccc;
   --main-dark: #0000ad;

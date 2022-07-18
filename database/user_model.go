@@ -24,3 +24,17 @@ func FindUserByEmail(email string) (user User, exists bool) {
 	exists = (err != gorm.ErrRecordNotFound)
 	return
 }
+
+func FindUserById(id uint) (user User, exists bool) {
+	err := DB.Where("id = ?", id).First(&user).Error
+	exists = (err != gorm.ErrRecordNotFound)
+	return
+}
+
+func AuthorNameById(id uint) string {
+	author, exists := FindUserById(id)
+	if exists {
+		return author.Name
+	}
+	return "Unknown"
+}

@@ -10,13 +10,6 @@ import (
 	"it1shka.com/my-recipes/myutils"
 )
 
-const WEAK_PASSWORD_MESSAGE = `
-	your password is weak.
-	Password should contain uppercase letter,
-	special character, number and be at least 8 characters
-	long.
-`
-
 func getLoginHandler(ctx *gin.Context) {
 	msg := ctx.GetString("error")
 	ctx.HTML(http.StatusOK, "login.html", gin.H{
@@ -106,8 +99,8 @@ func postRegisterHandler(ctx *gin.Context) {
 		return
 	}
 
-	if !myutils.IsPasswordStrong(regData.Password) {
-		regError(WEAK_PASSWORD_MESSAGE)
+	if valid, message := myutils.IsPasswordStrong(regData.Password); !valid {
+		regError(message)
 		return
 	}
 

@@ -1,6 +1,7 @@
 package myutils
 
 import (
+	"strings"
 	"unicode"
 
 	"golang.org/x/crypto/bcrypt"
@@ -18,23 +19,40 @@ func CheckPasswordHash(password, hash string) bool {
 	return err == nil
 }
 
-func IsPasswordStrong(pwd string) bool {
-	var length, number, upper, special bool
-	letters := 0
+func IsPasswordStrong(pwd string) (valid bool, message string) {
+	var hasNumber, hasUpper, hasSpecial bool
+
 	for _, char := range pwd {
 		switch {
 		case unicode.IsNumber(char):
-			number = true
+			hasNumber = true
 		case unicode.IsUpper(char):
-			upper = true
+			hasUpper = true
 		case unicode.IsPunct(char) || unicode.IsSymbol(char):
-			special = true
-		case unicode.IsLetter(char) || char == ' ':
-			letters++
-		default:
-			return false
+			hasSpecial = true
+		case !(unicode.IsLetter(char) || char == ' '):
+			valid = false
+			message = "unexpected character encountered"
+			return
 		}
 	}
-	length = letters > 7
-	return length && number && upper && special
+
+	problems := []string{}
+	if !hasNumber {
+		problems = append(problems, "you should add a number")
+	}
+	if !hasUpper {
+		problems = append(problems, "you should add an uppercase letter")
+	}
+	if !hasSpecial {
+		problems = append(problems, "you should add a special character")
+	}
+	if len([]rune(pwd)) < 8 {
+		problems = append(problems, "your password should be at least 8 characters long")
+	}
+
+	valid = (len(problems) == 0)
+	message = strings.Join(problems, ", ")
+
+	return
 }

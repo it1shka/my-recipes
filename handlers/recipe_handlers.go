@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -14,7 +15,7 @@ import (
 const RECIPE_SHORT_MESSAGE = `
 	recipe title or description
 	is too short:
-	title should be at least 10 characters long;
+	title should be at least 5 characters long;
 	description should be at least 250 characters long
 `
 
@@ -46,7 +47,7 @@ func postRecipeAddHandler(ctx *gin.Context) {
 		return
 	}
 
-	if len(recipeData.Title) < 10 || len(recipeData.Description) < 250 {
+	if len(recipeData.Title) < 5 || len(recipeData.Description) < 250 {
 		recipeError(RECIPE_SHORT_MESSAGE)
 		return
 	}
@@ -59,8 +60,9 @@ func postRecipeAddHandler(ctx *gin.Context) {
 		return
 	}
 
-	description := string(markdown.ToHTML([]byte(recipeData.Description), nil, nil))
+	description := recipeData.Description
 	authorID := session.Get("userid").(uint)
+
 	if _, err := database.CreateRecipe(slug, title, description, authorID); err != nil {
 		recipeError("failed to add your recipe")
 		return
@@ -71,7 +73,25 @@ func postRecipeAddHandler(ctx *gin.Context) {
 }
 
 func getRecipeBySlugHandler(ctx *gin.Context) {
+
 	slug := ctx.Param("slug")
-	// ...
-	ctx.String(http.StatusOK, slug)
+	recipe, exists := database.FindRecipeBySlug(slug)
+	if !exists {
+		ctx.HTML(http.StatusNotFound, "404.html", nil)
+		return
+	}
+
+	authorName := database.AuthorNameById(recipe.AuthorID)
+	createdAt := recipe.CreatedAt.Format("2006-02-01")
+	description := string(markdown.ToHTML([]byte(recipe.Description), nil, nil))
+	currentUserId := sessions.Default(ctx).Get("userid").(uint)
+
+	ctx.HTML(http.StatusOK, "recipe_page.html", gin.H{
+		"title":       recipe.Title,
+		"authorname":  authorName,
+		"createdat":   createdAt,
+		"description": template.HTML(description),
+
+		"isAuthor": currentUserId == recipe.AuthorID,
+	})
 }

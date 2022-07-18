@@ -1,0 +1,17 @@
+{{ template "header" }}
+
+{{ template "back-home" }}
+
+<!-- To continue later -->
+<div class="recipe-page">
+  <div class="recipe-page__header">
+    <h1>{{ .title }}</h1>
+    <p>By {{ .authorname }}, {{ .createdat }}</p>
+  </div>
+
+  <div class="recipe-page__content">
+    {{ .description }}
+  </div>
+</div>
+
+{{ template "footer" }}
