@@ -1,0 +1,8 @@
+{{ define "recipe" }}
+
+<div class="recipe">
+  <a href="/recipe/{{ .Slug }}">{{ .Title }}</a>
+  <p>Author: {{ .AuthorName }}, created at {{ .CreatedAt }}</p>
+</div>
+
+{{ end }}

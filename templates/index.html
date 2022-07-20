@@ -5,6 +5,7 @@
     <img src="/assets/recipe.png">
     <h1>My Recipes</h1>
   </div>
+
   {{ if not .username }}
   <div class="appheader__reglinks">
     <a class="fancy-link" href="/login">Login</a>
@@ -19,6 +20,47 @@
       <a class="color-button" href="/logout">Log Out</a>
     </div>
   {{ end }}
+
 </header>
 
+<div class="centered-wrapper">
+
+  <div class="content-wrapper">
+    <form method="get" class="content-wrapper__search-bar">
+      <input 
+        placeholder="Search by title: "
+        name="search"
+      >
+      <button class="color-button">Search</button>
+    </form>
+
+    {{ if .username }}
+    <a href="/recipe/add" class="content-wrapper__add-recipe-link">Write Your Own Recipe!</a>
+    {{ end }}
+  </div>
+
+  <div class="content-wrapper">
+  {{ if not .recipes }}
+  <div class="empty-mock">
+    Nothing on this page yet.
+  </div>
+  {{ else }}
+    {{ range .recipes }}
+      {{ template "recipe" . }}
+    {{ end }}
+  {{ end }}
+  </div>
+
+  <div class="pagination">
+  <a class="color-button" href="/">Back to the first</a>
+  {{ $currentPage := .page }}
+  {{ range .pagination }}
+    <form method="get">
+      <input type="hidden" name="page" value="{{ . }}">
+      <button class="color-button {{ if eq $currentPage . }} featured {{ end }}">{{ . }}</button>
+    </form>
+  {{ end }}
+  </div>
+
+<div>
 {{ template "footer" }}

@@ -26,3 +26,12 @@ func FindRecipeBySlug(slug string) (recipe Recipe, exists bool) {
 	exists = (err != gorm.ErrRecordNotFound)
 	return
 }
+
+const PAGE_SIZE = 10
+
+func FindRecipesByPage(page int) []Recipe {
+	offset := (page - 1) * PAGE_SIZE
+	var recipes []Recipe
+	DB.Offset(offset).Limit(PAGE_SIZE).Order("created_at desc").Find(&recipes)
+	return recipes
+}
