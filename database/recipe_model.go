@@ -1,6 +1,8 @@
 package database
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Recipe struct {
 	gorm.Model
@@ -29,9 +31,23 @@ func FindRecipeBySlug(slug string) (recipe Recipe, exists bool) {
 
 const PAGE_SIZE = 10
 
-func FindRecipesByPage(page int) []Recipe {
+// func FindRecipesByPage(page int) []Recipe {
+// 	offset := (page - 1) * PAGE_SIZE
+// 	var recipes []Recipe
+// 	DB.Offset(offset).Limit(PAGE_SIZE).Order("created_at desc").Find(&recipes)
+// 	return recipes
+// }
+
+func FindRecipesByPage(page int, search string) []Recipe {
 	offset := (page - 1) * PAGE_SIZE
 	var recipes []Recipe
-	DB.Offset(offset).Limit(PAGE_SIZE).Order("created_at desc").Find(&recipes)
+
+	query := DB // initialize a query
+	query = query.Where("lower(title) like ?", "%"+search+"%")
+	query = query.Offset(offset)
+	query = query.Limit(PAGE_SIZE)
+	query = query.Order("created_at desc")
+	query.Find(&recipes)
+
 	return recipes
 }

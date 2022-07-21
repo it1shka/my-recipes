@@ -20,7 +20,8 @@ func indexHandler(ctx *gin.Context) {
 		page = 1
 	}
 
-	recipes := database.FindRecipesByPage(page)
+	search := ctx.Query("search")
+	recipes := database.FindRecipesByPage(page, search)
 	pagination := myutils.GeneratePages(page)
 
 	session := sessions.Default(ctx)
